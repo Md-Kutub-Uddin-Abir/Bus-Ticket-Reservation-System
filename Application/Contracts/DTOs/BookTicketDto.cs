@@ -1,0 +1,11 @@
+using System;
+
+namespace Application.Contracts.DTOs;
+
+public class BookTicketDto
+{
+    public int BusScheduleId { get; set; }
+    public int SeatNo { get; set; }
+    public string PassengerName { get; set; } = string.Empty;
+    public string PassengerMobile { get; set; } = string.Empty;
+}

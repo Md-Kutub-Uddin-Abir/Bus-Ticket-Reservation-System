@@ -34,7 +34,7 @@ public class BusRepository : IBusRepository
         return schedule;
     }
 
-    // 🔹 SEARCH methods
+    //  SEARCH methods
     public async Task<List<BusSchedule>> SearchAvailableBusesAsync(string from, string to, DateTime journeyDate)
     {
         return await _context.BusSchedules

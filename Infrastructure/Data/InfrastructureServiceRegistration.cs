@@ -17,6 +17,12 @@ public static class InfrastructureServiceRegistration
         services.AddScoped<IBusRepository, BusRepository>();
         services.AddScoped<ISearchService, SearchService>();
         services.AddScoped<IBusService, BusService>(); 
+        services.AddScoped<ITicketRepository, TicketRepository>();
+        services.AddScoped<ITicketService, TicketService>();
+        services.AddScoped<IBusRepository, BusRepository>();
+        services.AddScoped<ITicketRepository, TicketRepository>();
+
+
 
         return services;
     }

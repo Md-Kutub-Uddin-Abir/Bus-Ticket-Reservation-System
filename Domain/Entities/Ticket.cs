@@ -16,8 +16,8 @@ public class Ticket
     public BusSchedule? BusSchedule { get; set; }  // Relation
     public int SeatNo { get; set; }
     public string PassengerName { get; set; } = string.Empty;
-    public string Mobile { get; set; } = string.Empty;
-    public SeatStatus Status { get; set; } = SeatStatus.Booked;
+    public string? Mobile { get; set; } = string.Empty;
+    public SeatStatus Status { get; set; } = SeatStatus.Available;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }
 

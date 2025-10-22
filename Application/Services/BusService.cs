@@ -7,10 +7,12 @@ namespace Application.Services;
 public class BusService : IBusService
 {
     private readonly IBusRepository _busRepository;
+    private readonly ITicketRepository _ticketRepository;
 
-    public BusService(IBusRepository busRepository)
+    public BusService(IBusRepository busRepository, ITicketRepository ticketRepository)
     {
         _busRepository = busRepository;
+        _ticketRepository = ticketRepository;
     }
 
     public async Task<Bus> CreateBusAsync(CreateBusDto dto)
@@ -42,6 +44,25 @@ public class BusService : IBusService
             Price = dto.Price
         };
 
-        return await _busRepository.AddScheduleAsync(schedule);
+        //  Schedule save
+        var createdSchedule = await _busRepository.AddScheduleAsync(schedule);
+
+        // seat generating
+        for (int i = 1; i <= bus.TotalSeats; i++)
+        {
+            var ticket = new Ticket
+            {
+                BusScheduleId = createdSchedule.Id,
+                SeatNo = i,
+                Status = SeatStatus.Available,
+                PassengerName = string.Empty,
+                Mobile = string.Empty,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            await _ticketRepository.AddTicketAsync(ticket);
+        }
+
+        return createdSchedule;
     }
 }
