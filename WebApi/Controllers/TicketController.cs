@@ -18,11 +18,16 @@ public class TicketController : ControllerBase
 
     //  POST /api/ticket/book
     [HttpPost("book")]
-    public async Task<IActionResult> BookTicket([FromBody] BookTicketDto dto)
+    public async Task<IActionResult> Book([FromBody] BookTicketDto dto)
     {
-        var ticket = await _ticketService.BookTicketAsync(dto);
-        return Ok(ticket);
+    var tickets = await _ticketService.BookTicketAsync(dto);
+    return Ok(new
+    {
+        Message = $"{tickets.Count} seat(s) booked successfully",
+        BookedSeats = tickets.Select(t => new { t.SeatNo, t.Status })
+    });
     }
+
 
     //  PUT /api/ticket/cancel/{ticketId}
     [HttpPut("cancel/{ticketId}")]

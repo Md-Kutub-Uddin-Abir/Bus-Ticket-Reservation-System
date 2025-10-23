@@ -15,31 +15,36 @@ public class TicketService : ITicketService
         _busRepository = busRepository;
     }
 
-    public async Task<Ticket> BookTicketAsync(BookTicketDto dto)
+    
+    public async Task<List<Ticket>> BookTicketAsync(BookTicketDto dto)
     {
-        // Check schedule exists
         var schedule = await _busRepository.GetBusByIdAsync(dto.BusScheduleId);
         if (schedule == null)
             throw new Exception("Bus Schedule not found.");
 
-        // Find the seat
-        var ticket = await _ticketRepository.GetTicketBySeatAsync(dto.BusScheduleId, dto.SeatNo);
-        if (ticket == null)
-            throw new Exception("Seat not found.");
+        var bookedTickets = new List<Ticket>();
 
-        if (ticket.Status == SeatStatus.Booked)
-            throw new Exception("Seat already booked.");
+        foreach (var seatNo in dto.SeatNumbers)
+        {
+            var ticket = await _ticketRepository.GetTicketBySeatAsync(dto.BusScheduleId, seatNo);
+            if (ticket == null)
+                throw new Exception($"Seat {seatNo} not found.");
 
-        // Book seat
-        ticket.Status = SeatStatus.Booked;
-        ticket.PassengerName = dto.PassengerName;
-        ticket.Mobile = dto.PassengerMobile;
+            if (ticket.Status == SeatStatus.Booked)
+                throw new Exception($"Seat {seatNo} is already booked.");
 
-        await _ticketRepository.UpdateTicketAsync(ticket);
+            ticket.Status = SeatStatus.Booked;
+            ticket.PassengerName = dto.PassengerName;
+            ticket.Mobile = dto.PassengerMobile;
 
-        return ticket;
+            await _ticketRepository.UpdateTicketAsync(ticket);
+            bookedTickets.Add(ticket);
+        }
+
+        return bookedTickets;
     }
 
+    
     public async Task<bool> CancelTicketAsync(int ticketId)
     {
         var ticket = await _ticketRepository.GetTicketByIdAsync(ticketId);
@@ -51,7 +56,7 @@ public class TicketService : ITicketService
 
         ticket.Status = SeatStatus.Available;
         ticket.PassengerName = string.Empty;
-
+        ticket.Mobile = string.Empty;
 
         await _ticketRepository.UpdateTicketAsync(ticket);
         return true;
