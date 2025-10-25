@@ -1,0 +1,66 @@
+<div class="container mt-5">
+  <div class="card shadow-lg p-4 rounded-4">
+    <div class="row g-3 align-items-end">
+      <!-- From -->
+      <div class="col-md-3">
+        <label class="form-label fw-bold">Going From</label>
+        <input type="text" class="form-control" [(ngModel)]="from" placeholder="Enter Source" />
+      </div>
+
+      <!-- To -->
+      <div class="col-md-3">
+        <label class="form-label fw-bold">Going To</label>
+        <input type="text" class="form-control" [(ngModel)]="to" placeholder="Enter Destination" />
+      </div>
+
+      <!-- Journey Date -->
+      <div class="col-md-3">
+        <label class="form-label fw-bold">Journey Date</label>
+        <input type="date" class="form-control" [(ngModel)]="journeyDate" />
+      </div>
+
+      <!-- Search Button -->
+      <div class="col-md-3 text-center">
+        <button class="btn btn-danger w-100 fw-bold" (click)="searchBus()">Search Bus</button>
+      </div>
+    </div>
+
+    <!-- Trending Section -->
+    <div class="mt-4 ">
+      <span class="fw-bold">Trending Searches: </span>
+      <button class="btn btn-outline-secondary btn-sm mx-1" (click)="setTrending('Dhaka', 'Rajshahi')">Dhaka → Rajshahi</button>
+      <button class="btn btn-outline-secondary btn-sm mx-1" (click)="setTrending('Dhaka', 'Coxs-Bazar')">Dhaka → Cox's Bazar</button>
+      <button class="btn btn-outline-secondary btn-sm mx-1" (click)="setTrending('Dhaka', 'Chittagong')">Dhaka → Chittagong</button>
+    </div>
+  </div>
+
+  <!-- Search Results -->
+  <div class="row mt-4" *ngIf="busSchedules.length > 0">
+    <h5 class="fw-bold mb-3">Available Buses</h5>
+    <div class="col-md-4 mb-4" *ngFor="let bus of busSchedules">
+      <div class="card border-0 shadow-sm rounded-4 p-3 h-100">
+        <h5 class="fw-bold text-danger">{{ bus.companyName }}</h5>
+        <p class="text-muted mb-1">
+            {{ bus.from }} → {{ bus.to }}
+        </p>
+        <p class="mb-1">
+            <strong>Date:</strong> {{ bus.journeyDate }}
+        </p>
+
+        <p class="mb-1">
+          <strong>Time:</strong> {{ bus.startTime }} – {{ bus.arrivalTime }}
+        </p>
+        <p class="mb-2">
+          <strong>Price:</strong> {{ bus.price }} ৳
+        </p>
+        <p class="mb-3">
+          <strong>Seats Left:</strong> {{ bus.seatsLeft }}
+        </p>
+        <button class="btn btn-outline-danger w-100 fw-bold"
+                (click)="viewSeats(bus.busScheduleId)">
+          View Seats
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
