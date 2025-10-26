@@ -11,6 +11,8 @@ public interface ITicketRepository
     Task<List<Ticket>> GetTicketsByScheduleAsync(int busScheduleId);
     Task UpdateTicketAsync(Ticket ticket);
     Task AddTicketAsync(Ticket ticket);
+    Task<List<Ticket>> GetTicketsByScheduleIdAsync(int busScheduleId);
+
 
 }
 

@@ -16,6 +16,20 @@ public class TicketController : ControllerBase
         _ticketService = ticketService;
     }
 
+    // GET /api/ticket/{busScheduleId}
+    [HttpGet("{busScheduleId}")]
+    public async Task<IActionResult> GetSeats(int busScheduleId)
+    {
+    
+        var seats = await _ticketService.GetSeatsByScheduleIdAsync(busScheduleId);
+
+        if (seats == null || !seats.Any())
+            return NotFound(new { message = "No seats found for this schedule" });
+
+        return Ok(seats);
+    }
+
+
     //  POST /api/ticket/book
     [HttpPost("book")]
     public async Task<IActionResult> Book([FromBody] BookTicketDto dto)

@@ -15,7 +15,7 @@ public class TicketService : ITicketService
         _busRepository = busRepository;
     }
 
-    
+
     public async Task<List<Ticket>> BookTicketAsync(BookTicketDto dto)
     {
         var schedule = await _busRepository.GetBusByIdAsync(dto.BusScheduleId);
@@ -44,7 +44,7 @@ public class TicketService : ITicketService
         return bookedTickets;
     }
 
-    
+
     public async Task<bool> CancelTicketAsync(int ticketId)
     {
         var ticket = await _ticketRepository.GetTicketByIdAsync(ticketId);
@@ -61,4 +61,10 @@ public class TicketService : ITicketService
         await _ticketRepository.UpdateTicketAsync(ticket);
         return true;
     }
+    
+    public async Task<List<Ticket>> GetSeatsByScheduleIdAsync(int busScheduleId)
+    {
+        return await _ticketRepository.GetTicketsByScheduleIdAsync(busScheduleId);
+    }
+
 }

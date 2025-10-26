@@ -41,8 +41,16 @@ public class TicketRepository : ITicketRepository
     }
     public async Task AddTicketAsync(Ticket ticket)
     {
-    _context.Tickets.Add(ticket);
-    await _context.SaveChangesAsync();
+        _context.Tickets.Add(ticket);
+        await _context.SaveChangesAsync();
     }
+    public async Task<List<Ticket>> GetTicketsByScheduleIdAsync(int busScheduleId)
+    {
+        return await _context.Tickets
+            .Where(t => t.BusScheduleId == busScheduleId)
+            .OrderBy(t => t.SeatNo)
+            .ToListAsync();
+    }
+
 
 }
