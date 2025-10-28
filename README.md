@@ -74,3 +74,4 @@ Features:
 
     Clean Architecture (Domain, Application, Infrastructure, WebApi)
 
+![alt text](image.png)
