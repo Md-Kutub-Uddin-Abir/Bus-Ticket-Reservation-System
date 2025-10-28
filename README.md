@@ -5,24 +5,7 @@ Built with ASP.NET Core Web API, Angular (Standalone Components), and PostgreSQL
 
 Project Structure
 
-BusTicket/
-│
-├── Backend/
-│   ├── Application/
-│   ├── Domain/
-│   ├── Infrastructure/
-│   ├── WebApi/
-│   └── Test/
-│
-├── Frontend/
-│   └── src/
-│       └── app/
-│           ├── components/
-│           │   ├── search-bus/
-│           │   └── seat-view/
-│           └── assets/
-│
-└── README.md
+![alt text](image-1.png)
 
 Backend Setup (ASP.NET Core 8 + PostgreSQL)
 1. Prerequisites:
@@ -73,5 +56,9 @@ Features:
     Validation and error handling
 
     Clean Architecture (Domain, Application, Infrastructure, WebApi)
+
+Some screenshot of the project.
+
+![alt text](<Screenshot 2025-10-28 170651.png>)
 
 ![alt text](image.png)
